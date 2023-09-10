@@ -1,7 +1,9 @@
+import 'package:cv_app/views/edit_view.dart';
 import 'package:flutter/material.dart';
 
 import '../shared/app_colors.dart';
 import '../views/home_view.dart';
+import './components/styles.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,42 +16,24 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'Poppins',
         textTheme: ThemeData.light().textTheme.copyWith(
-              bodyLarge: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-              bodyMedium: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-              ),
-              bodySmall: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.normal,
-              ),
-              titleLarge: const TextStyle(
-                fontSize: 20,
-                fontFamily: 'Raleway',
-                fontWeight: FontWeight.bold,
-              ),
-              titleMedium: const TextStyle(
-                fontSize: 18,
-                fontFamily: 'Raleway',
-                fontWeight: FontWeight.w600,
-              ),
-              titleSmall: const TextStyle(
-                fontSize: 14,
-                fontFamily: 'Raleway',
-                fontWeight: FontWeight.normal,
-              ),
+              bodyLarge: bodyLarge,
+              bodyMedium: bodyMedium,
+              bodySmall: bodySmall,
+              titleLarge: titleLarge,
+              titleMedium: titleMedium,
+              titleSmall: titleSmall,
             ),
         colorScheme: ColorScheme.fromSeed(seedColor: kcPrimaryColor),
         useMaterial3: true,
       ),
       home: const HomeView(),
+      routes: {
+        EditView.routeName: (ctx) => const EditView(),
+      },
     );
   }
 }

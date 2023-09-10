@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
+import 'app_text.dart';
+
 class CvButton extends StatelessWidget {
   final void Function()? onTap;
   final String title;
   final Color? color;
+  final TextStyle? style;
 
   const CvButton({
     this.color,
+    this.style,
     this.onTap,
     required this.title,
     super.key,
@@ -21,14 +25,16 @@ class CvButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: double.infinity,
-        height: height * 0.05,
+        height: height * 0.06,
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.circular(12),
         ),
-        child: Text(
-          title,
-          style: Theme.of(context).textTheme.bodyMedium,
+        child: Center(
+          child: CvText(
+            text: title,
+            style: style,
+          ),
         ),
       ),
     );
