@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../shared/app_colors.dart';
 
 const TextStyle bodyLarge = TextStyle(
-  fontSize: 18,
+  fontSize: 20,
   color: kcTextColor,
   fontWeight: FontWeight.bold,
 );

@@ -7,12 +7,14 @@ class CvText extends StatelessWidget {
   final String text;
   final bool? softWrap;
   final TextStyle? style;
+  final TextAlign? textAlign;
 
   CvText.bodyLarge(
     this.text,
     this.softWrap, {
     Color color = kcTextColor,
     super.key,
+    this.textAlign,
   }) : style = bodyLarge.copyWith(
           color: color,
         );
@@ -21,6 +23,7 @@ class CvText extends StatelessWidget {
     this.softWrap, {
     Color color = kcTextColor,
     super.key,
+    this.textAlign,
   }) : style = bodyMedium.copyWith(
           color: color,
         );
@@ -30,15 +33,17 @@ class CvText extends StatelessWidget {
     this.softWrap, {
     Color color = kcTextColor,
     super.key,
+    this.textAlign,
   }) : style = bodySmall.copyWith(
           color: color,
         );
 
-  CvText.itleLarge(
+  CvText.titleLarge(
     this.text,
     this.softWrap, {
     Color color = kcTextColor,
     super.key,
+    this.textAlign,
   }) : style = titleLarge.copyWith(
           color: color,
         );
@@ -48,6 +53,7 @@ class CvText extends StatelessWidget {
     this.softWrap, {
     Color color = kcTextColor,
     super.key,
+    this.textAlign,
   }) : style = bodyMedium.copyWith(
           color: color,
         );
@@ -57,6 +63,7 @@ class CvText extends StatelessWidget {
     this.softWrap, {
     Color color = kcTextColor,
     super.key,
+    this.textAlign,
   }) : style = titleSmall.copyWith(
           color: color,
         );
@@ -65,12 +72,14 @@ class CvText extends StatelessWidget {
     this.softWrap,
     required this.text,
     this.style,
+    this.textAlign,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return Text(
+      textAlign: textAlign,
       text,
       softWrap: softWrap,
       textScaleFactor: MediaQuery.textScaleFactorOf(context),

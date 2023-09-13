@@ -1,138 +1,295 @@
-import 'package:cv_app/components/app_button.dart';
-import 'package:cv_app/components/app_text.dart';
-import 'package:cv_app/components/app_text_field.dart';
-import 'package:cv_app/components/styles.dart';
-import 'package:cv_app/shared/app_colors.dart';
-import 'package:cv_app/views/edit_view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HomeView extends StatelessWidget {
+import '../views/widgets/app_bar.dart';
+import '../views/widgets/profile_header.dart';
+import '../models/user_data.dart';
+import '../components/app_text.dart';
+import '../components/styles.dart';
+import '../shared/app_colors.dart';
+import '../views/edit_view.dart';
+import '../components/app_layouts.dart';
+import '../utils/app_arguments.dart';
+
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
-  Widget editField(
-      String labelText, String hintText, TextInputType keyboardType) {
-    return CvInput(
-      labelText: labelText,
-      hintText: hintText,
-      keyboardType: keyboardType,
-    );
-  }
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  final user = UserData.userData;
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: kcBackgroundColor,
-        actions: [
-          GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, EditView.routeName);
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(15),
-              child: Row(
-                children: [
-                  CvText(
-                    text: 'Edit CV',
-                    style: bodySmall.copyWith(
-                      color: kcTextColor,
-                    ),
-                  ),
-                  const Icon(
-                    Icons.edit,
-                    size: 20,
-                    color: kcPrimaryColor,
-                  ),
-                ],
+    void passData() async {
+      List<String?> passed = await Navigator.push(
+        context,
+        CupertinoPageRoute(
+            builder: (_) => const EditView(),
+            settings: RouteSettings(
+              arguments: EditArgs(
+                mail: user.email,
+                dob: user.dob,
+                obj: user.objectives,
+                org: user.organization,
+                exp: user.experience,
+                name: user.fullName,
+                slack: user.slackName,
+                skill: user.skills,
+                ref: user.reference,
+                twt: user.twitter,
+                year: user.year,
+                phone: user.phone,
+                state: user.state,
+                github: user.githubLink,
+                lga: user.lga,
               ),
-            ),
+            )),
+      );
+
+      setState(() {
+        user.fullName = passed[0]!;
+        user.email = passed[1];
+        user.githubLink = passed[2]!;
+        user.slackName = passed[3]!;
+        user.phone = passed[4]!;
+        user.objectives = passed[5]!;
+        user.dob = passed[6]!;
+        user.lga = passed[7];
+        user.state = passed[8];
+        user.twitter = passed[9]!;
+        user.organization = passed[10]!;
+        user.experience = passed[11]!;
+        user.year = passed[12]!;
+        user.skills = passed[13];
+      });
+    }
+
+    return ScreenLayout(
+      mobile: OrientationLayout(
+        portrait: Scaffold(
+          appBar: cvAppBar(
+            context,
+            'Edit CV',
+            Icons.edit,
+            passData,
           ),
-        ],
-      ),
-      backgroundColor: kcBackgroundColor,
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: width * 0.045,
-        ),
-        child: ListView(
-          children: [
-            SizedBox(
-              height: height * 0.015,
+          backgroundColor: kcBackgroundColor,
+          body: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: width * 0.045,
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+            child: ListView(
               children: [
-                CircleAvatar(
-                  maxRadius: height * 0.045,
-                  backgroundImage: const AssetImage(
-                    'assets/passport.jpg',
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                ProfileHeader(
+                  image: user.userImage,
+                  slack: user.slackName,
+                  gitHub: user.githubLink,
+                  fullName: user.fullName,
+                  email: user.email,
+                  phone: user.phone,
+                ),
+                SizedBox(
+                  height: height * 0.03,
+                ),
+                CvText(
+                  text: 'Objective',
+                  style: bodyMedium.copyWith(
+                    color: kcTextColor,
                   ),
                 ),
-                Column(
-                  children: [
-                    CvText.bodyLarge(
-                      'Egbekwu NwaneDiLobu',
-                      true,
-                      color: kcTextColor,
-                    ),
-                    CvText(
-                      text: 'egbekwunwanedilobu@gmail.com',
-                      style: titleSmall.copyWith(
-                          color: kcPrimaryColor, fontWeight: FontWeight.w500),
-                    ),
-                    CvText(
-                      text: 'https://github.com/N-DiLo',
-                      style: titleSmall.copyWith(
-                          color: kcTextColor, fontWeight: FontWeight.w500),
-                    ),
-                    Row(
-                      children: [
-                        CvText(
-                          text: 'Slack: DiLo',
-                          style: titleSmall.copyWith(
-                              color: kcTextColor, fontSize: 12),
-                        ),
-                        SizedBox(
-                          width: width * 0.02,
-                        ),
-                        CvText(
-                          text: '+234 905 130 9102',
-                          style: titleSmall.copyWith(
-                            fontSize: 12,
-                            color: kcTextColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                CvText(
+                  text: '${user.objectives}',
+                  style: bodySmall.copyWith(
+                    color: kcTextColor,
+                  ),
+                ),
+                SizedBox(
+                  height: height * 0.02,
+                ),
+                CvText(
+                  text: 'Personal Bio',
+                  style: bodyMedium.copyWith(
+                    color: kcTextColor,
+                  ),
+                ),
+                CvText(
+                  text: 'Date of birth: ${user.dob}',
+                  style: bodySmall,
+                ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                CvText(
+                  text: 'Local Govt. Area: ${user.lga}',
+                  style: bodySmall,
+                ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                CvText(
+                  text: 'State: ${user.state}',
+                  style: bodySmall,
+                ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                CvText(
+                  text: 'Twitter: ${user.twitter}',
+                  style: bodySmall,
+                ),
+                SizedBox(
+                  height: height * 0.02,
+                ),
+                const CvText(
+                  text: 'Experience',
+                  style: bodyMedium,
+                ),
+                ListTile(
+                  leading: const Icon(
+                    Icons.work_history_outlined,
+                    color: kcPrimaryColor,
+                  ),
+                  title: CvText(
+                    text: '${user.organization}',
+                    style: bodyMedium,
+                  ),
+                  subtitle: CvText(
+                    text: '${user.experience}',
+                    style: bodySmall,
+                  ),
+                  trailing: CvText(
+                    text: '${user.year}',
+                    style: bodyMedium,
+                  ),
+                ),
+                const CvText(
+                  text: 'Skills',
+                  style: bodyMedium,
+                ),
+                CvText(
+                  text: '${user.skills}',
+                  style: bodySmall,
                 ),
               ],
             ),
-            SizedBox(
-              height: height * 0.02,
+          ),
+        ),
+        landscape: Scaffold(
+          appBar: cvAppBar(context, 'Edit CV', Icons.edit, passData),
+          backgroundColor: kcBackgroundColor,
+          body: Padding(
+            padding: EdgeInsets.symmetric(horizontal: width * 0.03),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ProfileHeaderLandscape(
+                  image: user.userImage,
+                  slack: user.slackName,
+                  gitHub: user.githubLink,
+                  fullName: user.fullName,
+                  email: user.email,
+                  phone: user.phone,
+                ),
+                SizedBox(
+                  width: width * 0.04,
+                ),
+                Expanded(
+                  child: ListView(
+                    children: [
+                      CvText(
+                        text: 'Objective',
+                        style: bodyMedium.copyWith(
+                          color: kcTextColor,
+                        ),
+                      ),
+                      CvText(
+                        text: '${user.objectives}',
+                        style: bodySmall.copyWith(
+                          color: kcTextColor,
+                        ),
+                      ),
+                      SizedBox(
+                        height: height * 0.02,
+                      ),
+                      CvText(
+                        text: 'Personal Bio',
+                        style: bodyMedium.copyWith(
+                          color: kcTextColor,
+                        ),
+                      ),
+                      CvText(
+                        text: 'Date of birth: ${user.dob}',
+                        style: bodySmall,
+                      ),
+                      SizedBox(
+                        height: height * 0.01,
+                      ),
+                      CvText(
+                        text: 'Local Govt. Area: ${user.lga}',
+                        style: bodySmall,
+                      ),
+                      SizedBox(
+                        height: height * 0.01,
+                      ),
+                      CvText(
+                        text: 'State: ${user.state}',
+                        style: bodySmall,
+                      ),
+                      SizedBox(
+                        height: height * 0.01,
+                      ),
+                      CvText(
+                        text: 'Twitter: ${user.twitter}',
+                        style: bodySmall,
+                      ),
+                      SizedBox(
+                        height: height * 0.02,
+                      ),
+                      const CvText(
+                        text: 'Experience',
+                        style: bodyMedium,
+                      ),
+                      ListTile(
+                        leading: const Icon(
+                          Icons.work_history_outlined,
+                          color: kcPrimaryColor,
+                        ),
+                        title: CvText(
+                          text: '${user.organization}',
+                          style: bodyMedium,
+                        ),
+                        subtitle: CvText(
+                          text: '${user.experience}',
+                          style: bodySmall,
+                        ),
+                        trailing: CvText(
+                          text: '${user.year}',
+                          style: bodyMedium,
+                        ),
+                      ),
+                      const CvText(
+                        text: 'Skills',
+                        style: bodyMedium,
+                      ),
+                      CvText(
+                        text: '${user.skills}',
+                        style: bodySmall,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-            CvText(
-              text: 'Objective',
-              style: bodyMedium.copyWith(
-                color: kcTextColor,
-              ),
-            ),
-            SizedBox(
-              height: height * 0.015,
-            ),
-            CvButton(
-              title: 'Save Now',
-              color: kcPrimaryColor,
-              style: bodyMedium.copyWith(
-                color: kcBackgroundColor,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

@@ -5,7 +5,7 @@
 
 A new Flutter project to display user data (bio-data and professional) details or CV data in different view modes.
 
-This app is created by DiLo as criterion for moving to the next stage (stage 3) in the HNGx internship 2023.😁 The app also gives users the option for editing with user-friendly fields or sections for modifying the existing CV data.
+This app is created by DiLo as criterion for moving to the next stage (stage 3) in the HNGx internship 2023.😁 The app also gives users the option for editing, with user-friendly fields or sections for modifying the existing CV data.
 
 ## Getting Started
 
@@ -22,11 +22,7 @@ samples, guidance on mobile development, and a full API reference.
 
 ## App Test Link
 
-The app is hosted on appetize [click here](#) to test the app.
-
-<!-- ## Architecture & Dependencies
-
-This app implements the Model View View Model (MVVM) architecture. -->
+The app is hosted on appetize [click here](https://appetize.io/app/dpmeymaj7zuir25nvxagc3otam?device=pixel4&osVersion=11.0&scale=75) to test the app.
 
 ### Prerequisites
 
